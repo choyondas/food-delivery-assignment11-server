@@ -167,7 +167,28 @@ client.connect(err => {
         // const query = { _id: ObjectId(id) };
         // const serv = await serviceCollection.findOne(query);
         // res.json(serv);
+    });
+
+    app.get('/services/:id', async (req, res) => {
+        const id = req.params.id;
+        const query = { _id: ObjectId(id) };
+        const result = await serviceCollection.findOne(query);
+        res.send(result);
+        // ai part er pore data ta /5000/users/id te pabo
     })
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 });
