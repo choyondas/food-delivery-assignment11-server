@@ -30,11 +30,8 @@ client.connect(err => {
 
 
 
-    const toastsCollection = client.db("fastFood").collection("toasts");
-    const pizzasCollection = client.db("fastFood").collection("pizzas");
-    const saladsCollection = client.db("fastFood").collection("salads");
-    const drinksCollection = client.db("fastFood").collection("drinks");
-    const dessertsCollection = client.db("fastFood").collection("desserts");
+    const placeorderCollection = client.db("fastFood").collection("placeorder");
+
 
 
 
@@ -180,10 +177,28 @@ client.connect(err => {
 
 
 
+    //delete one item from
 
+    app.delete('/services/:id', async (req, res) => {
+        const id = req.params.id;
+        const query = { _id: ObjectId(id) };
+        const result = await serviceCollection.deleteOne(query);
+        console.log('deleted id', result);
+        res.json(result);
+    })
 
+    app.post('/placeorder', async (req, res) => {
+        const order = req.body;
+        const result = await placeorderCollection.insertOne(order);
+        console.log('post succ', result)
+        res.json(result);
+    })
 
-
+    app.get('/placeorder', async (req, res) => {
+        const cursor = placeorderCollection.find({});
+        const users = await cursor.toArray();
+        res.send(users);
+    })
 
 
 
